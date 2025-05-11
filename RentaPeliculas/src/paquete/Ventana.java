@@ -5,109 +5,101 @@ import java.awt.*;
 
 public class Ventana extends JFrame {
 
-    public Ventana() { 
-        setTitle("Renta de Películas");
-        setSize(800, 600);
+    public Ventana() {
+        setTitle("Panel Administrador");
+        setSize(800, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Centrar ventana
-        setLayout(null); // Diseño absoluto
+        setLocationRelativeTo(null);
 
-        // ---------------------------
-        // Panel superior (encabezado)
-        // ---------------------------
-        JPanel topPanel = new JPanel();
-        topPanel.setBackground(Color.CYAN);
-        topPanel.setBounds(0, 0, 800, 80);
-        topPanel.setLayout(null);
+        // Eliminar el borde redondeado y la decoración
+        setUndecorated(false); // Esto desactiva la eliminación de bordes
 
-        JLabel logo = new JLabel("🎬 RENTA DE PELÍCULAS");
-        logo.setFont(new Font("Arial", Font.BOLD, 18));
-        logo.setBounds(280, 20, 300, 30);
-        topPanel.add(logo);
+        // Configuración de fondo
+        JPanel fondo = new JPanel();
+        fondo.setBackground(Color.WHITE);
+        fondo.setLayout(new BorderLayout()); // Usamos BorderLayout para distribuir los componentes
 
-        // --------------------------------
-        // Panel de login (borde redondeado)
-        // --------------------------------
-        RoundedPanel loginPanel = new RoundedPanel(30);
-        loginPanel.setBackground(new Color(0xD9, 0xD9, 0xD9)); // Gris claro
-        loginPanel.setBounds(240, 150, 320, 250);
-        loginPanel.setLayout(null);
+        // Encabezado rojo
+        JPanel encabezado = new JPanel();
+        encabezado.setBackground(new Color(0xaf4436));
+        encabezado.setPreferredSize(new Dimension(800, 60)); // Aseguramos que el encabezado tenga un tamaño fijo
+        fondo.add(encabezado, BorderLayout.NORTH);
 
-        JLabel loginTitle = new JLabel("INICIO DE SESIÓN DE ADMINISTRADOR");
-        loginTitle.setForeground(Color.BLACK);
-        loginTitle.setFont(new Font("Arial", Font.BOLD, 14));
-        loginTitle.setBounds(20, 10, 300, 30);
-        loginPanel.add(loginTitle);
+        // Panel central con GridBagLayout
+        JPanel panelCentro = new JPanel();
+        panelCentro.setBackground(new Color(0xf1f1f1));
+        panelCentro.setLayout(new GridBagLayout()); // Usamos GridBagLayout para los componentes del panel central
+        fondo.add(panelCentro, BorderLayout.CENTER);
 
-        JTextField emailField = new JTextField();
-        emailField.setBounds(20, 60, 280, 25);
-        emailField.setFont(new Font("Arial", Font.PLAIN, 12));
-        emailField.setToolTipText("E-mail");
-        loginPanel.add(emailField);
+        // Logo
+        JLabel logo = new JLabel(new ImageIcon(getClass().getResource("LOGO.png"))); // Pon tu imagen aquí
+        logo.setPreferredSize(new Dimension(80, 80)); // Aseguramos que el logo tenga un tamaño adecuado
+        GridBagConstraints gbcLogo = new GridBagConstraints();
+        gbcLogo.gridx = 0;
+        gbcLogo.gridy = 0;
+        gbcLogo.insets = new Insets(10, 10, 10, 10); // Espaciado entre los componentes
+        panelCentro.add(logo, gbcLogo);
 
-        JPasswordField passField = new JPasswordField();
-        passField.setBounds(20, 100, 280, 25);
-        passField.setFont(new Font("Arial", Font.PLAIN, 12));
-        passField.setToolTipText("Contraseña");
-        loginPanel.add(passField);
+        // Título
+        JLabel titulo = new JLabel("PANEL ADMINISTRADOR");
+        titulo.setFont(new Font("Arial", Font.BOLD, 14));
+        titulo.setForeground(new Color(0x22334c));
+        GridBagConstraints gbcTitulo = new GridBagConstraints();
+        gbcTitulo.gridx = 0;
+        gbcTitulo.gridy = 1;
+        gbcTitulo.insets = new Insets(10, 10, 10, 10);
+        panelCentro.add(titulo, gbcTitulo);
 
-        JLabel forgotPass = new JLabel("Olvidé mi contraseña");
-        forgotPass.setForeground(new Color(0, 102, 204));
-        forgotPass.setFont(new Font("Arial", Font.PLAIN, 11));
-        forgotPass.setBounds(20, 130, 200, 20);
-        loginPanel.add(forgotPass);
+        // Correo
+        JLabel lblCorreo = new JLabel("Ingresar correo:");
+        GridBagConstraints gbcCorreo = new GridBagConstraints();
+        gbcCorreo.gridx = 0;
+        gbcCorreo.gridy = 2;
+        gbcCorreo.insets = new Insets(10, 10, 10, 10);
+        panelCentro.add(lblCorreo, gbcCorreo);
 
-        JButton confirmButton = new JButton("CONFIRMAR");
-        confirmButton.setBackground(new Color(76, 175, 80)); // Verde tipo Material
-        confirmButton.setForeground(Color.WHITE);
-        confirmButton.setFont(new Font("Arial", Font.BOLD, 12));
-        confirmButton.setBounds(100, 170, 120, 30);
-        loginPanel.add(confirmButton);
+        JTextField txtCorreo = new JTextField();
+        txtCorreo.setPreferredSize(new Dimension(240, 25)); // Fijamos un tamaño adecuado para el campo
+        txtCorreo.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+        GridBagConstraints gbcTxtCorreo = new GridBagConstraints();
+        gbcTxtCorreo.gridx = 0;
+        gbcTxtCorreo.gridy = 3;
+        gbcTxtCorreo.insets = new Insets(10, 10, 10, 10);
+        panelCentro.add(txtCorreo, gbcTxtCorreo);
 
-        // -----------------------------
-        // Fondo con imagen
-        // -----------------------------
-        ImageIcon originalIcon = new ImageIcon(getClass().getResource("renta.png"));
-        Image imagenEscalada = originalIcon.getImage().getScaledInstance(800, 600, Image.SCALE_SMOOTH);
-        ImageIcon fondoIcon = new ImageIcon(imagenEscalada);
-        JLabel fondo = new JLabel(fondoIcon);
-        fondo.setBounds(0, 0, 800, 600);
-        fondo.setLayout(null); // importante para que los paneles puedan colocarse sobre él
+        // Contraseña
+        JLabel lblPass = new JLabel("Contraseña:");
+        GridBagConstraints gbcPass = new GridBagConstraints();
+        gbcPass.gridx = 0;
+        gbcPass.gridy = 4;
+        gbcPass.insets = new Insets(10, 10, 10, 10);
+        panelCentro.add(lblPass, gbcPass);
 
-        // Añadir los paneles encima del fondo
-        fondo.add(topPanel);
-        fondo.add(loginPanel);
+        JPasswordField txtPass = new JPasswordField();
+        txtPass.setPreferredSize(new Dimension(240, 25)); // Fijamos un tamaño adecuado para el campo
+        txtPass.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+        GridBagConstraints gbcTxtPass = new GridBagConstraints();
+        gbcTxtPass.gridx = 0;
+        gbcTxtPass.gridy = 5;
+        gbcTxtPass.insets = new Insets(10, 10, 10, 10);
+        panelCentro.add(txtPass, gbcTxtPass);
 
-        // Añadir todo al JFrame
-        add(fondo);
+        // Botón
+        JButton btnAcceder = new JButton("ACCEDER");
+        btnAcceder.setBackground(new Color(0x22334c));
+        btnAcceder.setForeground(Color.WHITE);
+        GridBagConstraints gbcBtnAcceder = new GridBagConstraints();
+        gbcBtnAcceder.gridx = 0;
+        gbcBtnAcceder.gridy = 6;
+        gbcBtnAcceder.insets = new Insets(20, 10, 10, 10);
+        panelCentro.add(btnAcceder, gbcBtnAcceder);
 
+        // Configurar el panel de contenido
+        setContentPane(fondo);
         setVisible(true);
     }
 
     public static void main(String[] args) {
         new Ventana();
-    }
-}
-
-// ----------------------------
-// Clase auxiliar: Panel redondeado
-// ----------------------------
-class RoundedPanel extends JPanel {
-    private int cornerRadius;
-
-    public RoundedPanel(int radius) {
-        super();
-        this.cornerRadius = radius;
-        setOpaque(false);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Dimension arcs = new Dimension(cornerRadius, cornerRadius);
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(getBackground());
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), arcs.width, arcs.height);
     }
 }

@@ -93,6 +93,11 @@ public class Ventana extends JFrame {
         gbcBtnAcceder.gridy = 6;
         gbcBtnAcceder.insets = new Insets(20, 10, 10, 10);
         panelCentro.add(btnAcceder, gbcBtnAcceder);
+        btnAcceder.addActionListener(e -> {
+            new Inicio();         // Abre la segunda ventana
+            dispose();            // Cierra la ventana actual
+        });
+
 
         // Configurar el panel de contenido
         setContentPane(fondo);
@@ -102,4 +107,5 @@ public class Ventana extends JFrame {
     public static void main(String[] args) {
         new Ventana();
     }
+    
 }

@@ -86,6 +86,9 @@ public class AdministradorRentaCompra extends JFrame {
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
+		
+		
+		
         
 		 JButton registros = new JButton("Renta");
 		 registros.setBounds(119, 242, 206, 100);

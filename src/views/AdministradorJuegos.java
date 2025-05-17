@@ -97,6 +97,8 @@ public class AdministradorJuegos extends JFrame {
 		iniciar.setHorizontalAlignment(JLabel.CENTER);
 		iniciar.setFont(new Font("Calibri", Font.BOLD, 24));
 		panelCentral.add(iniciar);
+		
+		// hola 
         
 		 JButton registros = new JButton("Registros");
 		 registros.setBounds(150, 205, 206, 100);
